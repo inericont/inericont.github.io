@@ -22,3 +22,29 @@
     if (event.key === "Escape") setOpen(false);
   });
 })();
+
+(function () {
+  const video = document.getElementById("kraken-video");
+  const btn = document.getElementById("unmute-btn");
+  if (!video || !btn) return;
+
+  const setSound = (on) => {
+    video.muted = !on;
+    btn.classList.toggle("is-on", on);
+    btn.setAttribute("aria-pressed", on ? "true" : "false");
+    btn.setAttribute("aria-label", on ? "Silenciar" : "Activar sonido");
+  };
+
+  btn.addEventListener("click", () => {
+    const on = video.muted;
+    setSound(on);
+    if (video.paused) video.play().catch(() => {});
+  });
+
+  const tryPlay = () => video.play().catch(() => {});
+  if (video.readyState >= 2) tryPlay();
+  else video.addEventListener("canplay", tryPlay, { once: true });
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) tryPlay();
+  });
+})();

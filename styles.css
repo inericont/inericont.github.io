@@ -344,7 +344,7 @@ body {
   width: 100%;
   aspect-ratio: 4 / 5;
   object-fit: cover;
-  object-position: 50% 20%;
+  object-position: 50% 12%;
   border-radius: 28px;
   border: 1px solid var(--pink-line);
   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45);
@@ -440,6 +440,9 @@ h3 {
   margin-bottom: 8px;
 }
 .job-org { color: var(--pink); font-weight: 600; }
+a.job-org:hover { color: var(--white); }
+.hero .role a { color: var(--pink); }
+.hero .role a:hover { color: var(--white); }
 .when {
   font-family: "JetBrains Mono", ui-monospace, monospace;
   font-size: 12px;
@@ -512,11 +515,24 @@ h3 {
 }
 
 .video-block {
-  margin: 12px 0 48px;
-  display: grid;
-  grid-template-columns: minmax(220px, 360px) 1fr;
-  gap: 40px;
-  align-items: start;
+  margin: 28px 0 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+}
+.video-stage {
+  width: min(100%, 460px);
+  position: relative;
+}
+.video-stage::before {
+  content: "";
+  position: absolute;
+  inset: 8% -12% -8% -12%;
+  background: radial-gradient(circle at 50% 50%, rgba(255, 120, 180, 0.32), transparent 68%);
+  filter: blur(28px);
+  z-index: 0;
+  pointer-events: none;
 }
 .phone-frame {
   background: #141014;
@@ -527,15 +543,56 @@ h3 {
     0 0 0 1px rgba(255, 120, 180, 0.08),
     0 24px 50px rgba(0, 0, 0, 0.5);
 }
+.video-phone {
+  position: relative;
+  z-index: 1;
+  box-shadow:
+    0 0 0 1px rgba(255, 120, 180, 0.28),
+    0 0 80px rgba(255, 120, 180, 0.22),
+    0 36px 80px rgba(0, 0, 0, 0.6);
+}
 .phone-frame video,
 .phone-frame img.screen {
   width: 100%;
   border-radius: 22px;
   background: #000;
 }
+.video-phone video {
+  aspect-ratio: 9 / 16;
+  object-fit: cover;
+  display: block;
+}
+.unmute-btn {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--bg);
+  background: var(--pink);
+  border: 0;
+  border-radius: 999px;
+  padding: 9px 14px 9px 12px;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  transition: background 0.2s var(--ease), color 0.2s var(--ease), transform 0.2s var(--ease);
+}
+.unmute-btn:hover { background: var(--white); }
+.unmute-btn svg { width: 16px; height: 16px; fill: currentColor; }
+.unmute-btn .icon-on, .unmute-btn .lbl-on { display: none; }
+.unmute-btn.is-on .icon-muted, .unmute-btn.is-on .lbl-off { display: none; }
+.unmute-btn.is-on .icon-on, .unmute-btn.is-on .lbl-on { display: inline; }
+.unmute-btn.is-on svg.icon-on { display: block; }
 .video-note {
   color: var(--muted);
   margin: 0;
+  text-align: center;
+  max-width: 36em;
 }
 
 .gallery {
